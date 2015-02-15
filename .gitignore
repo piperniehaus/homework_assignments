@@ -1,0 +1,4 @@
+spec/*
+spec
+*.orig
+.gitignore_*
