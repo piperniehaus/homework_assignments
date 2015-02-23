@@ -1,32 +1,25 @@
 #!/usr/bin/env ruby
-SEC_PER_MIN = 60
-MIN_PER_HOUR = 60
-HRS_PER_DAY = 24
-DAY_PER_WK = 7
-DAY_PER_YR = 365
 
-SEC_PER_HR = SEC_PER_MIN * MIN_PER_HOUR
-SEC_PER_DAY = SEC_PER_HR * HRS_PER_DAY
-SEC_PER_WK = SEC_PER_DAY * DAY_PER_WK
-SEC_PER_YR = SEC_PER_DAY * DAY_PER_YR
+seconds_per_minute = 60
+minutes_per_hour = 60
+hours_per_day = 24
+days_per_week = 7
+days_per_year = 365
+seconds_per_hour = seconds_per_minute * minutes_per_hour
+seconds_per_day = seconds_per_hour * hours_per_day
+seconds_per_week = seconds_per_day * days_per_week
+seconds_per_year = seconds_per_day * days_per_year
 
-# Add an age in seconds method to Fixnum
-class Fixnum
-  def age_in_sec
-    self * SEC_PER_YR
-  end
-end
-
-puts 'There are 60 seconds in a minute'
-puts 'There are 60 minutes in an hour'
-puts 'There are 24 hours in a day'
-puts 'There are 7 days in a week'
+puts "There are #{seconds_per_minute} seconds in a minute"
+puts "There are #{minutes_per_hour} minutes in an hour"
+puts "There are #{hours_per_day} hours in a day"
+puts "There are #{days_per_week} days in a week"
 puts 'That means there are:'
-puts "  #{SEC_PER_HR} seconds in an hour,"
-puts "  #{SEC_PER_DAY} seconds in a day,"
-puts "  #{SEC_PER_WK} seconds in a week"
-puts 'That means when you turn 20, '\
-"you've been alive for #{20.age_in_sec} seconds,"
-puts 'and if you make it to 100,'\
-" you will have lived #{100.age_in_sec} seconds. "\
-'Make them count!'
+puts "  #{seconds_per_hour} seconds in an hour,"
+puts "  #{seconds_per_day} seconds in a day,"
+puts "  #{seconds_per_week} seconds in a week"
+print 'That means when you turn 20, '
+puts "you've been alive for #{20 * seconds_per_year} seconds,"
+print 'and if you make it to 100,'
+print " you will have lived #{100 * seconds_per_year} seconds. "
+puts 'Make them count!'
