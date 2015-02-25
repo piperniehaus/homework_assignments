@@ -22,7 +22,7 @@ class ParkingMeter
     (@total_paid * 60 - time_elapsed).floor
   end
 
-  # Check how much time is left
+  # Check how much time is left on the meter
   def check_meter
     puts "You have #{minutes_remaining} minutes remaining."
   end
