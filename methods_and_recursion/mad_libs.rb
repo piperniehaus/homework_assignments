@@ -1,68 +1,97 @@
 #!/usr/bin/env ruby
 
-class Line
-    attr_accessor :word
-    attr_reader :word_type, :text
-    def initialize text, word_type=''
-      @word_type = word_type
-      @text = text
-    end
-    def get_word previous_word_type=''
-      if word_type == ''
-        @word = ''
-      elsif @word_type == previous_word_type
-        puts "Give me another #{word_type}:"
-        @word = gets.chomp
-      elsif ['a','e','i','o','u'].include?(@word_type.downcase.slice(0,1))
-        puts "Give me an #{word_type}:"
-        @word = gets.chomp
-      else
-        puts "Give me a #{word_type}:"
-        @word = gets.chomp
-      end
-    end
-    def write
-      @text + @word
-    end
-end
+# Text of madlib
+text = []
+# Descriptions of the parts of speech For users to choose words
+parts_of_speech = []
+# User-selected words
+words = []
 
-$lines = [
-Line.new('A vacation is when you take a trip to some ', 'adjective'),
-Line.new(" place\n with your ",''),
-# Line.new(" family. Usually you go to some place that is near a/an\n",'noun'),
-# Line.new(' or up on a/an ','noun'),
-# Line.new("A good vacation place is one where you can ride\n",'plural noun'),
-# Line.new('or play ','game'),
-# Line.new(' or go hunting for ','plural noun'),
-# Line.new('. I like to spend my time ','verb ending in ing'),
-# Line.new(' or ','verb ending in ing'),
-# Line.new(". When parents go on a vacation, \nthey spend their time eating three ",'plural noun'),
-# Line.new(' a day, and fathers play golf, and mothers sit around ','verb ending in ing'),
-# Line.new('. Last summer, my little brother fell in a/an _','noun'),
-# Line.new(' and got poison ', 'plant'),
-# Line.new(' all over his ', 'part of body'),
-# Line.new('. My family is going to go to (the)','a place'),
-# Line.new(", and I will practice \n",'verb ending in ing'),
-# Line.new('. Parents need vacations more than kids because parents are always very ','adjective'),
-# Line.new(' and because they have to work ','number'),
-# Line.new(' hours every day all year making enough ', 'noun'),
-]
+# Ask user for word based on part of speech needed
+def get_word(part_of_speech, previous_part_of_speech)
+  part_of_speech.downcase!
+  previous_part_of_speech.downcase!
 
-def get_words line, previous_line_type=''
-  line.get_word previous_line_type
-  if($lines.index(line) < $lines.length - 1)
-    next_line = $lines[$lines.index(line) + 1]
-    get_words next_line, line.word_type
+  if part_of_speech == previous_part_of_speech
+    puts "Give me another #{part_of_speech}:"
+  elsif %w('a e i o u').include?(part_of_speech[0])
+    puts "Give me an #{part_of_speech}:"
   else
-    $lines.each do |line|
-      print line.write
-    end
+    puts "Give me a #{part_of_speech}:"
   end
+  gets.chomp
 end
 
-get_words $lines[0]
+# Write out the text
+text.push('A vacation is when you take a trip to some ')
+parts_of_speech.push('adjective')
 
+text.push(" place\nwith your ")
+parts_of_speech.push('adjective')
 
-# $lines.each do |line|
-#   puts line.word_type
-# end
+text.push(" family. Usually you go to some place\nthat is near a/an ")
+parts_of_speech.push('noun')
+
+text.push(' or up on a/an ')
+parts_of_speech.push('noun')
+
+text.push(".\nA good vacation place is one where you can ride ")
+parts_of_speech.push('plural noun')
+
+text.push("\nor play ")
+parts_of_speech.push('game')
+
+text.push(' or go hunting for ')
+parts_of_speech.push('plural noun')
+
+text.push(". I like\nto spend my time ")
+parts_of_speech.push("verb ending in 'ing'")
+
+text.push(' or ')
+parts_of_speech.push("verb ending in 'ing'")
+
+text.push(".\nWhen parents go on a vacation,"\
+" they spend their time eating\nthree ")
+parts_of_speech.push('plural noun')
+
+text.push(' a day, and fathers play golf, '\
+"and mothers\nsit around ")
+parts_of_speech.push("verb ending in 'ing'")
+
+text.push(". Last summer, my little brother\nfell in a/an ")
+parts_of_speech.push('noun')
+
+text.push(' and got poison ')
+parts_of_speech.push('plant')
+
+text.push(" all\nover his ")
+parts_of_speech.push('part of body')
+
+text.push(". My family is going to go to (the)\n")
+parts_of_speech.push('place')
+
+text.push(', and I will practice ')
+parts_of_speech.push("verb ending in 'ing'")
+
+text.push(". Parents\nneed vacations more than kids "\
+"because parents are always very\n")
+parts_of_speech.push('adjective')
+
+text.push(' and because they have to work ')
+parts_of_speech.push('number')
+
+text.push("\nhours every day all year making enough ")
+parts_of_speech.push('plural noun')
+
+text.push(" to pay\nfor the vacation.")
+
+# Get a word for each part of speech entry
+parts_of_speech.each_with_index do |part_of_speech, key|
+  words.push(get_word(part_of_speech, parts_of_speech[key - 1]))
+end
+
+# Print text and user-submitted words
+text.each_with_index do |line, key|
+  print line
+  print words[key]
+end
