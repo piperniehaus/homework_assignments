@@ -18,7 +18,7 @@ class ParkingMeter
   # The parking space costs $1 for 60 min
   # Return the number of minutes remaining
   def minutes_remaining
-    time_elapsed = Time.new - @start_time
+    time_elapsed = (Time.new - @start_time) / 60
     (@total_paid * 60 - time_elapsed).floor
   end
 
